@@ -1,0 +1,45 @@
+<app-topbar />
+
+<div class="page-overlay"
+  [ngStyle]="{ opacity: expanded() ? 0.3 : 0, pointerEvents: expanded() ? 'auto' : 'none' }">
+</div>
+
+<nav class="vertical-bar" [ngClass]="{ 'expanded': expanded() }">
+  <div class="module-container">
+    @for (module of modules; track module.key) {
+      <div
+        class="module"
+        [ngClass]="{ 'expanded': expanded(), 'active': module.active }"
+        (click)="moduleClick(module)">
+
+        <img
+          class="module-icon"
+          src="assets/icons/navbar/modules/{{ module.key }}.svg"
+          alt="{{ module.name }}"
+          nz-tooltip
+          [nzTooltipTitle]="!expanded() ? module.name : null"
+          nzTooltipPlacement="right" />
+
+        @if (expanded()) {
+          <div class="module-name">
+            <div class="module-text">{{ module.name }}</div>
+          </div>
+        }
+      </div>
+    }
+  </div>
+
+  <div class="bottom-options">
+    @if (expanded()) {
+      <button class="expand-button" (click)="toggleExpand()"
+        nz-tooltip nzTooltipTitle="Colapsar" nzTooltipPlacement="right">
+        <img src="assets/icons/navbar/expand.svg" alt="Colapsar">
+      </button>
+    } @else {
+      <button class="expand-button" (click)="toggleExpand()"
+        nz-tooltip nzTooltipTitle="Expandir" nzTooltipPlacement="right">
+        <img src="assets/icons/navbar/reduce.svg" alt="Expandir">
+      </button>
+    }
+  </div>
+</nav>

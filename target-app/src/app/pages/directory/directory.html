@@ -1,0 +1,36 @@
+<div class="directory-page">
+  <header class="page-header">
+    <div class="header-text">
+      <h2 nz-typography>Directorio</h2>
+      <p class="subtitle">Todas las personas de la organización</p>
+    </div>
+    <span class="count">{{ people.length }} personas</span>
+  </header>
+
+  <nz-table
+    #table
+    [nzData]="people"
+    [nzShowPagination]="false"
+    [nzBordered]="false"
+    nzSize="middle"
+  >
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Área</th>
+        <th>Rol</th>
+      </tr>
+    </thead>
+    <tbody>
+      @for (person of table.data; track person.id) {
+        <tr>
+          <td class="name-cell">{{ person.name }}</td>
+          <td>
+            <nz-tag [nzColor]="areaColor(person.area)">{{ person.area }}</nz-tag>
+          </td>
+          <td>{{ person.role }}</td>
+        </tr>
+      }
+    </tbody>
+  </nz-table>
+</div>

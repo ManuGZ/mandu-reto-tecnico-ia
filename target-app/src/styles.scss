@@ -1,0 +1,46 @@
+@import 'ng-zorro-antd/ng-zorro-antd.min.css';
+
+:root {
+  --text-color: #4f4f4f;
+  --text-muted-color: #979797;
+  --primary-color: #2694fc;
+  --primary-bg: #ebf5ff;
+  --hover-bg: #f6f6f6;
+  --border-color: #d9d9d9;
+  --navbar-height: 48px;
+  --main-background-color: #f9f9f9;
+  --font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-family);
+  background: var(--main-background-color);
+  -webkit-font-smoothing: antialiased;
+}
+
+// Avatar de iniciales — global para que funcione en overlays de ng-zorro
+.user-avatar-initials {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #2694fc, #5a52ff);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  letter-spacing: 0.02em;
+
+  &--large {
+    width: 40px;
+    height: 40px;
+    font-size: 14px;
+  }
+}
