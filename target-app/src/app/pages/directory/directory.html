@@ -4,12 +4,25 @@
       <h2 nz-typography>Directorio</h2>
       <p class="subtitle">Todas las personas de la organización</p>
     </div>
-    <span class="count">{{ people.length }} personas</span>
+    <span class="count">{{ filteredPeople().length }} personas</span>
   </header>
+
+  <div class="filter-bar">
+    <nz-select
+      [ngModel]="selectedArea()"
+      (ngModelChange)="selectedArea.set($event)"
+      nzPlaceHolder="Área"
+    >
+      <nz-option nzValue="Todas" nzLabel="Todas"></nz-option>
+      @for (area of areas; track area) {
+        <nz-option [nzValue]="area" [nzLabel]="area"></nz-option>
+      }
+    </nz-select>
+  </div>
 
   <nz-table
     #table
-    [nzData]="people"
+    [nzData]="filteredPeople()"
     [nzShowPagination]="false"
     [nzBordered]="false"
     nzSize="middle"

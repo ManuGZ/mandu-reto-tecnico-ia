@@ -33,6 +33,14 @@
   border: 1px solid #e8e8e8;
 }
 
+.filter-bar {
+  margin-bottom: 1rem;
+
+  nz-select {
+    min-width: 220px;
+  }
+}
+
 .name-cell {
   font-weight: 500;
 }

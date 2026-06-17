@@ -1,4 +1,6 @@
-import { Component, inject } from '@angular/core';
+import { Component, computed, inject, signal } from '@angular/core';
+import { FormsModule } from '@angular/forms';
+import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
@@ -15,13 +17,20 @@ const AREA_COLORS: Record<Area, string> = {
 
 @Component({
   selector: 'app-directory',
-  imports: [NzTableModule, NzTagModule, NzTypographyModule],
+  imports: [FormsModule, NzSelectModule, NzTableModule, NzTagModule, NzTypographyModule],
   templateUrl: './directory.html',
   styleUrl: './directory.scss',
 })
 export class Directory {
   private peopleService = inject(PeopleService);
-  protected people = this.peopleService.getAll();
+  private allPeople = this.peopleService.getAll();
+
+  protected readonly areas = Object.keys(AREA_COLORS) as Area[];
+  protected selectedArea = signal<Area | 'Todas'>('Todas');
+  protected filteredPeople = computed(() => {
+    const area = this.selectedArea();
+    return area === 'Todas' ? this.allPeople : this.allPeople.filter((p) => p.area === area);
+  });
 
   protected areaColor(area: Area): string {
     return AREA_COLORS[area] ?? 'default';
