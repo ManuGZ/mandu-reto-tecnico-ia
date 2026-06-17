@@ -1,5 +1,14 @@
+import { google } from 'googleapis';
 import { Envelope, ok, err } from '../lib/envelope.js';
 import { parseDocId } from '../lib/parse-doc-id.js';
+
+// GoogleAuth resuelve credenciales por ADC (Application Default Credentials):
+//  - Service account: variable de entorno GOOGLE_APPLICATION_CREDENTIALS -> ruta al JSON.
+//  - ADC local:       `gcloud auth application-default login` (sin archivo).
+const auth = new google.auth.GoogleAuth({
+  scopes: ['https://www.googleapis.com/auth/drive.readonly'],
+});
+const drive = google.drive({ version: 'v3', auth });
 
 export async function fetchDocText(
   input: string,
@@ -9,40 +18,32 @@ export async function fetchDocText(
     return err('INVALID_URL', `No se pudo extraer un ID de Google Doc desde: "${input}"`);
   }
 
-  const url = `https://docs.google.com/document/d/${id}/export?format=txt`;
-
-  let res: Response;
   try {
-    // redirect: 'follow' (por defecto). Un Doc público se sirve TRAS un redirect
-    // interno de Google a googleusercontent.com, así que no hay que bloquearlo.
-    res = await fetch(url);
-  } catch (e) {
+    const res = await drive.files.export(
+      { fileId: id, mimeType: 'text/plain' },
+      { responseType: 'text' },
+    );
+    return ok({ id, text: String(res.data) });
+  } catch (e: unknown) {
+    const status =
+      (e as { code?: number })?.code ??
+      (e as { response?: { status?: number } })?.response?.status;
+    if (status === 404) {
+      return err('NOT_FOUND', `No existe un documento con ID "${id}".`);
+    }
+    if (status === 403) {
+      return err(
+        'FORBIDDEN',
+        'Sin permiso. Comparte el documento con el email del service account (o usa una cuenta con acceso).',
+      );
+    }
+    if (status === 401) {
+      return err(
+        'FORBIDDEN',
+        'Credenciales inválidas o ausentes (revisa GOOGLE_APPLICATION_CREDENTIALS o el ADC).',
+      );
+    }
     const msg = e instanceof Error ? e.message : String(e);
-    return err('FETCH_ERROR', `Fallo de red al contactar Google: ${msg}`);
+    return err('FETCH_ERROR', `Error al leer el documento: ${msg}`);
   }
-
-  if (res.status === 404) {
-    return err('NOT_FOUND', `No existe un documento con ID "${id}".`);
-  }
-
-  // Un doc no público termina redirigido al login de Google.
-  if (res.url.includes('accounts.google.com')) {
-    return err('FORBIDDEN', 'El documento no es público. Compártelo como "cualquiera con el enlace".');
-  }
-
-  if (!res.ok) {
-    return err('FETCH_ERROR', `Google respondió con estado ${res.status}.`);
-  }
-
-  const text = await res.text();
-
-  // Si llega HTML (página de login/permiso) en vez del texto del doc, no es accesible.
-  const contentType = res.headers.get('content-type') ?? '';
-  const looksHtml =
-    contentType.includes('text/html') || /^\s*<!doctype html|^\s*<html/i.test(text);
-  if (looksHtml) {
-    return err('FORBIDDEN', 'El documento no es accesible públicamente (se recibió HTML, no texto).');
-  }
-
-  return ok({ id, text });
 }

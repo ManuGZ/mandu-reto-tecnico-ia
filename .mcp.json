@@ -6,7 +6,7 @@
       "args": [
         "mcp-server/dist/index.js"
       ],
-      "env": {}
+      "env": { "GOOGLE_APPLICATION_CREDENTIALS": "/Users/manuel/.config/mandu/sa.json" }
     }
   }
 }
