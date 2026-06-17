@@ -1,0 +1,43 @@
+<div class="detail">
+  <header class="detail-header">
+    <div class="avatar">{{ initials() }}</div>
+    <h3 class="name">{{ person().name }}</h3>
+  </header>
+
+  <dl class="info-list">
+    <div class="info-row">
+      <dt class="label">Área</dt>
+      <dd class="value">
+        <nz-tag [nzColor]="areaColor()">{{ person().area }}</nz-tag>
+      </dd>
+    </div>
+
+    <div class="info-row">
+      <dt class="label">Rol</dt>
+      <dd class="value">{{ person().role }}</dd>
+    </div>
+
+    <div class="info-row">
+      <dt class="label">Email</dt>
+      <dd class="value">
+        <a [href]="'mailto:' + person().email">{{ person().email }}</a>
+      </dd>
+    </div>
+
+    <div class="info-row">
+      <dt class="label">Fecha de ingreso</dt>
+      <dd class="value">{{ hireDateLabel() }}</dd>
+    </div>
+
+    <div class="info-row">
+      <dt class="label">Manager</dt>
+      <dd class="value">
+        @if (person().manager) {
+          {{ person().manager }}
+        } @else {
+          —
+        }
+      </dd>
+    </div>
+  </dl>
+</div>

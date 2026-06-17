@@ -36,7 +36,10 @@
     </thead>
     <tbody>
       @for (person of table.data; track person.id) {
-        <tr>
+        <tr
+          (click)="selectPerson(person)"
+          [class.row-selected]="selectedPerson()?.id === person.id"
+        >
           <td class="name-cell">{{ person.name }}</td>
           <td>
             <nz-tag [nzColor]="areaColor(person.area)">{{ person.area }}</nz-tag>
@@ -46,4 +49,18 @@
       }
     </tbody>
   </nz-table>
+
+  <nz-drawer
+    [nzVisible]="!!selectedPerson()"
+    nzPlacement="right"
+    [nzWidth]="380"
+    nzTitle="Detalle de la persona"
+    (nzOnClose)="closeDetail()"
+  >
+    <ng-container *nzDrawerContent>
+      @if (selectedPerson(); as person) {
+        <app-person-detail [person]="person" [areaColor]="areaColor(person.area)" />
+      }
+    </ng-container>
+  </nz-drawer>
 </div>

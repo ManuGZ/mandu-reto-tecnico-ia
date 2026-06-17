@@ -44,3 +44,11 @@
 .name-cell {
   font-weight: 500;
 }
+
+tbody tr {
+  cursor: pointer;
+}
+
+tbody tr.row-selected > td {
+  background: #e6f4ff;
+}

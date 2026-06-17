@@ -1,11 +1,13 @@
 import { Component, computed, inject, signal } from '@angular/core';
 import { FormsModule } from '@angular/forms';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzSelectModule } from 'ng-zorro-antd/select';
 import { NzTableModule } from 'ng-zorro-antd/table';
 import { NzTagModule } from 'ng-zorro-antd/tag';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { PeopleService } from '../../services/people.service';
-import { Area } from '../../models/person.model';
+import { Area, Person } from '../../models/person.model';
+import { PersonDetail } from './person-detail/person-detail';
 
 const AREA_COLORS: Record<Area, string> = {
   'Tecnología': 'blue',
@@ -17,7 +19,15 @@ const AREA_COLORS: Record<Area, string> = {
 
 @Component({
   selector: 'app-directory',
-  imports: [FormsModule, NzSelectModule, NzTableModule, NzTagModule, NzTypographyModule],
+  imports: [
+    FormsModule,
+    NzDrawerModule,
+    NzSelectModule,
+    NzTableModule,
+    NzTagModule,
+    NzTypographyModule,
+    PersonDetail,
+  ],
   templateUrl: './directory.html',
   styleUrl: './directory.scss',
 })
@@ -32,7 +42,17 @@ export class Directory {
     return area === 'Todas' ? this.allPeople : this.allPeople.filter((p) => p.area === area);
   });
 
+  protected selectedPerson = signal<Person | null>(null);
+
   protected areaColor(area: Area): string {
     return AREA_COLORS[area] ?? 'default';
+  }
+
+  protected selectPerson(person: Person) {
+    this.selectedPerson.set(person);
+  }
+
+  protected closeDetail() {
+    this.selectedPerson.set(null);
   }
 }
