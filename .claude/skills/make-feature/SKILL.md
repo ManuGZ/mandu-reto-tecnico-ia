@@ -36,7 +36,7 @@ mcp__google-docs__read_google_doc  con  { "url": "$ARGUMENTS" }
 
 La tool devuelve un envelope:
 
-- `{ "ok": true, "data": { "id", "text" } }` → usa `data.text` como requerimiento.
+- `{ ok:true, data:{ id, text, authMode } }` → usa `data.text` como requerimiento. Reporta al usuario el modo de lectura: **"Requerimiento leído — modo de auth: <data.authMode>"**.
 - `{ "ok": false, "error": { "code", "message" } }` → **detente** y reporta el error
   al usuario en lenguaje claro:
   - `INVALID_URL` → la URL/ID no es válida.
