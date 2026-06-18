@@ -3,9 +3,6 @@
 }
 
 .page-header {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
   margin-bottom: 1.25rem;
 
   .header-text {
@@ -22,33 +19,4 @@
   margin: 0.2rem 0 0;
   font-size: 0.875rem;
   color: #8c8c8c;
-}
-
-.count {
-  font-size: 0.875rem;
-  color: #8c8c8c;
-  background: #ffffff;
-  padding: 0.25rem 0.75rem;
-  border-radius: 9999px;
-  border: 1px solid #e8e8e8;
-}
-
-.filter-bar {
-  margin-bottom: 1rem;
-
-  nz-select {
-    min-width: 220px;
-  }
-}
-
-.name-cell {
-  font-weight: 500;
-}
-
-tbody tr {
-  cursor: pointer;
-}
-
-tbody tr.row-selected > td {
-  background: #e6f4ff;
 }

@@ -1,0 +1,63 @@
+<div class="table-toolbar">
+  <div class="filter-bar">
+    <input
+      nz-input
+      class="search-input"
+      placeholder="Buscar por nombre"
+      [ngModel]="searchTerm()"
+      (ngModelChange)="searchTerm.set($event)"
+    />
+    <nz-select
+      [ngModel]="selectedArea()"
+      (ngModelChange)="selectedArea.set($event)"
+      nzPlaceHolder="Área"
+    >
+      <nz-option nzValue="Todas" nzLabel="Todas"></nz-option>
+      @for (area of areas; track area) {
+        <nz-option [nzValue]="area" [nzLabel]="area"></nz-option>
+      }
+    </nz-select>
+  </div>
+  <span class="count">{{ displayPeople().length }} personas</span>
+</div>
+
+<nz-table
+  #table
+  [nzData]="displayPeople()"
+  [nzPageSize]="10"
+  [nzFrontPagination]="true"
+  [nzBordered]="false"
+  nzSize="middle"
+  [nzNoResult]="emptyTpl"
+>
+  <thead>
+    <tr>
+      <th [nzSortFn]="sortByName">Nombre</th>
+      <th [nzSortFn]="sortByArea">Área</th>
+      <th [nzSortFn]="sortByRole">Rol</th>
+      <th [nzSortFn]="sortByManager">Manager</th>
+    </tr>
+  </thead>
+  <tbody>
+    @for (person of table.data; track person.id) {
+      <tr (click)="select(person)" [class.row-selected]="selectedId() === person.id">
+        <td class="name-cell">{{ person.name }}</td>
+        <td>
+          <nz-tag [nzColor]="areaColor(person.area)">{{ person.area }}</nz-tag>
+        </td>
+        <td>{{ person.role }}</td>
+        <td>
+          @if (person.manager) {
+            {{ person.manager }}
+          } @else {
+            —
+          }
+        </td>
+      </tr>
+    }
+  </tbody>
+</nz-table>
+
+<ng-template #emptyTpl>
+  <nz-empty [nzNotFoundContent]="emptyText()"></nz-empty>
+</ng-template>

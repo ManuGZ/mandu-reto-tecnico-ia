@@ -4,59 +4,24 @@
       <h2 nz-typography>Directorio</h2>
       <p class="subtitle">Todas las personas de la organización</p>
     </div>
-    <span class="count">{{ filteredPeople().length }} personas</span>
   </header>
 
-  <div class="filter-bar">
-    <nz-select
-      [ngModel]="selectedArea()"
-      (ngModelChange)="selectedArea.set($event)"
-      nzPlaceHolder="Área"
-    >
-      <nz-option nzValue="Todas" nzLabel="Todas"></nz-option>
-      @for (area of areas; track area) {
-        <nz-option [nzValue]="area" [nzLabel]="area"></nz-option>
-      }
-    </nz-select>
-  </div>
-
-  <nz-table
-    #table
-    [nzData]="filteredPeople()"
-    [nzShowPagination]="false"
-    [nzBordered]="false"
-    nzSize="middle"
-  >
-    <thead>
-      <tr>
-        <th>Nombre</th>
-        <th>Área</th>
-        <th>Rol</th>
-        <th>Manager</th>
-      </tr>
-    </thead>
-    <tbody>
-      @for (person of table.data; track person.id) {
-        <tr
-          (click)="selectPerson(person)"
-          [class.row-selected]="selectedPerson()?.id === person.id"
-        >
-          <td class="name-cell">{{ person.name }}</td>
-          <td>
-            <nz-tag [nzColor]="areaColor(person.area)">{{ person.area }}</nz-tag>
-          </td>
-          <td>{{ person.role }}</td>
-          <td>
-            @if (person.manager) {
-              {{ person.manager }}
-            } @else {
-              —
-            }
-          </td>
-        </tr>
-      }
-    </tbody>
-  </nz-table>
+  <nz-tabs>
+    <nz-tab nzTitle="Colaboradores">
+      <app-people-table
+        [people]="allPeople"
+        [selectedId]="selectedPerson()?.id ?? null"
+        (personSelected)="selectPerson($event)"
+      />
+    </nz-tab>
+    <nz-tab nzTitle="Managers">
+      <app-people-table
+        [people]="managers()"
+        [selectedId]="selectedPerson()?.id ?? null"
+        (personSelected)="selectPerson($event)"
+      />
+    </nz-tab>
+  </nz-tabs>
 
   <nz-drawer
     [nzVisible]="!!selectedPerson()"

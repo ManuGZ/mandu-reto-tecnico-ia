@@ -1,52 +1,33 @@
 import { Component, computed, inject, signal } from '@angular/core';
-import { FormsModule } from '@angular/forms';
 import { NzDrawerModule } from 'ng-zorro-antd/drawer';
-import { NzSelectModule } from 'ng-zorro-antd/select';
-import { NzTableModule } from 'ng-zorro-antd/table';
-import { NzTagModule } from 'ng-zorro-antd/tag';
+import { NzTabsModule } from 'ng-zorro-antd/tabs';
 import { NzTypographyModule } from 'ng-zorro-antd/typography';
 import { PeopleService } from '../../services/people.service';
-import { Area, Person } from '../../models/person.model';
+import { Person } from '../../models/person.model';
 import { PersonDetail } from './person-detail/person-detail';
-
-const AREA_COLORS: Record<Area, string> = {
-  'Tecnología': 'blue',
-  'Producto':   'purple',
-  'Personas':   'green',
-  'Comercial':  'orange',
-  'Finanzas':   'cyan',
-};
+import { PeopleTable } from './people-table/people-table';
+import { areaColor } from './area-colors';
 
 @Component({
   selector: 'app-directory',
-  imports: [
-    FormsModule,
-    NzDrawerModule,
-    NzSelectModule,
-    NzTableModule,
-    NzTagModule,
-    NzTypographyModule,
-    PersonDetail,
-  ],
+  imports: [NzDrawerModule, NzTabsModule, NzTypographyModule, PersonDetail, PeopleTable],
   templateUrl: './directory.html',
   styleUrl: './directory.scss',
 })
 export class Directory {
   private peopleService = inject(PeopleService);
-  private allPeople = this.peopleService.getAll();
+  protected allPeople = this.peopleService.getAll();
 
-  protected readonly areas = Object.keys(AREA_COLORS) as Area[];
-  protected selectedArea = signal<Area | 'Todas'>('Todas');
-  protected filteredPeople = computed(() => {
-    const area = this.selectedArea();
-    return area === 'Todas' ? this.allPeople : this.allPeople.filter((p) => p.area === area);
+  protected managers = computed(() => {
+    const managerNames = new Set(
+      this.allPeople.filter((person) => person.manager).map((person) => person.manager),
+    );
+    return this.allPeople.filter((person) => managerNames.has(person.name));
   });
 
   protected selectedPerson = signal<Person | null>(null);
 
-  protected areaColor(area: Area): string {
-    return AREA_COLORS[area] ?? 'default';
-  }
+  protected readonly areaColor = areaColor;
 
   protected selectPerson(person: Person) {
     this.selectedPerson.set(person);
