@@ -10,7 +10,7 @@ import type { DocData } from './types.js';
  *    debe estar compartido por enlace).
  *
  * Para cambiar de modo el usuario solo define o quita GOOGLE_APPLICATION_CREDENTIALS
- * (y reinicia el server). No hay que tocar este código ni el resto del harness.
+ * (y reinicia el server)
  *
  * La estrategia se carga con import() dinámico, así el modo público no necesita
  * cargar googleapis.

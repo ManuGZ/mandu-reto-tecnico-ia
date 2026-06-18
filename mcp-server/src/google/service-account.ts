@@ -4,11 +4,10 @@ import { parseDocId } from '../lib/parse-doc-id.js';
 import type { DocData } from './types.js';
 
 /**
- * Estrategia de lectura con SERVICE ACCOUNT / ADC (googleapis).
+ * Estrategia de lectura con SERVICE ACCOUNT(googleapis).
  * Soporta documentos privados compartidos con el service account.
  * Las credenciales se resuelven por ADC:
- *   - GOOGLE_APPLICATION_CREDENTIALS -> ruta al JSON del service account, o
- *   - `gcloud auth application-default login` (ADC local).
+ *   - GOOGLE_APPLICATION_CREDENTIALS -> ruta al JSON del service account
  */
 const auth = new google.auth.GoogleAuth({
   scopes: ['https://www.googleapis.com/auth/drive.readonly'],

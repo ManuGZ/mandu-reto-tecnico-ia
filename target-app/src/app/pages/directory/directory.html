@@ -32,6 +32,7 @@
         <th>Nombre</th>
         <th>Área</th>
         <th>Rol</th>
+        <th>Manager</th>
       </tr>
     </thead>
     <tbody>
@@ -45,6 +46,13 @@
             <nz-tag [nzColor]="areaColor(person.area)">{{ person.area }}</nz-tag>
           </td>
           <td>{{ person.role }}</td>
+          <td>
+            @if (person.manager) {
+              {{ person.manager }}
+            } @else {
+              —
+            }
+          </td>
         </tr>
       }
     </tbody>

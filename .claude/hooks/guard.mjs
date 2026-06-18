@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 /**
  * PreToolUse hook — protege el harness /make-feature.
  *
@@ -103,5 +102,4 @@ for (let i = 0; i < lines.length; i++) {
   }
 }
 
-// Todo en orden.
 process.exit(0);
