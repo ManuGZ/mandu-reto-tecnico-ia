@@ -15,7 +15,7 @@ proceso queda encapsulado y es repetible.
 
 ---
 
-## Entregables del reto (dónde está cada cosa)
+## Entregables del reto
 
 | Entregable | Ubicación |
 |---|---|
@@ -258,6 +258,7 @@ control flow `@for`/`@if`, archivos sin sufijo `.component`, SCSS e imports de `
 por componente.
 
 Como extra se agrego el feature de **Mostrar una pestaña de managers** - se agregó una nueva pestaña Managers que muestra a los managers de los colaboradores Además, se incorporaron funcionalidades de búsqueda, ordenamiento y paginación, las cuales están disponibles tanto en esta nueva vista como en la tabla principal del directorio, junto con el acceso al detalle de cada persona.
+
 ---
 
 ## Por qué `/make-feature` supera a prompetear directamente
@@ -269,7 +270,7 @@ según cómo se redactó el prompt.
 
 La skill convierte eso en un proceso que siempre ocurre: lee
 convenciones, planifica con un punto de control, separa responsabilidades en subagentes,
-verifica e itera, y todo dentro de un perímetro de seguridad. El mismo documento produce el
+verifica e itera. El mismo documento produce el
 mismo proceso, lo ejecute quien lo ejecute, y queda auditable de principio a fin. Esa
 **reproducibilidad** es la diferencia: no es un mejor prompt, es no depender del prompt.
 
