@@ -329,4 +329,4 @@ toque archivos fuera de la app.
 ## Video
 
 > _(Enlace al video que muestra `/make-feature` ejecutándose de principio a fin sobre uno de
-> los Google Docs.)_: https://drive.google.com/file/d/12NrQvgTQZr46nBq-tc82AJoBFCQtq3UK/view?usp=share_link 
+> los Google Docs.)_: https://drive.google.com/file/d/1p2fXgC7m-Op6RR6WO5bhvvCGeclrIdaa/view?usp=share_link
