@@ -257,8 +257,7 @@ Ambos respetan las convenciones del proyecto: componentes standalone, `inject()`
 control flow `@for`/`@if`, archivos sin sufijo `.component`, SCSS e imports de `ng-zorro`
 por componente.
 
-Como extra se agrego el feature de **Mostrar manager en el directorio de personas** - agregar una columna en la tabla para poder identificar el Manager de cada colaborador. En el caso que el colaborador no tenga un manager asignado se muestra un "Sin asignar"
-
+Como extra se agrego el feature de **Mostrar una pestaña de managers** - se agregó una nueva pestaña Managers que muestra a los managers de los colaboradores Además, se incorporaron funcionalidades de búsqueda, ordenamiento y paginación, las cuales están disponibles tanto en esta nueva vista como en la tabla principal del directorio, junto con el acceso al detalle de cada persona.
 ---
 
 ## Por qué `/make-feature` supera a prompetear directamente
